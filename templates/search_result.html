@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+<body>
+    <h1>Search Results</h1>
+    {% if document %}
+    <p>Title: {{ document.title }}</p>
+    <p>Publisher: {{ document.publisher_name }}</p>
+    <p>Publication Date: {{ document.publication_date }}</p>
+    {% else %}
+    <p>No document found with the provided ID.</p>
+    {% endif %}
+    <a href="/">Search Again</a>
+</body>
+</html>

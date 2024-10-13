@@ -1,0 +1,53 @@
+Top N Most Frequent Borrowers in Branch I
+
+SELECT r.RID, r.RNAME, COUNT(*) AS NumberOfBooksBorrowed
+FROM READER r
+JOIN BORROWS b ON r.RID = b.RID
+JOIN COPY c ON b.DOCID = c.DOCID AND b.COPYNO = c.COPYNO AND b.BID = c.BID
+WHERE c.BID = :branchId  -- assign variable entered
+GROUP BY r.RID, r.RNAME
+ORDER BY NumberOfBooksBorrowed DESC
+LIMIT :N; -- assign variable entered
+
+
+Top N Most Frequent Borrowers in the Library
+
+SELECT r.RID, r.RNAME, COUNT(*) AS NumberOfBooksBorrowed
+FROM READER r
+JOIN BORROWS b ON r.RID = b.RID
+GROUP BY r.RID, r.RNAME
+ORDER BY NumberOfBooksBorrowed DESC
+LIMIT :N;
+
+
+N Most Borrowed Books in Branch I
+
+SELECT d.DOCID, d.TITLE, COUNT(*) AS TimesBorrowed
+FROM DOCUMENT d
+JOIN BORROWS b ON d.DOCID = b.DOCID
+JOIN COPY c ON b.DOCID = c.DOCID AND b.COPYNO = c.COPYNO AND b.BID = c.BID
+WHERE c.BID = :branchId
+GROUP BY d.DOCID, d.TITLE
+ORDER BY TimesBorrowed DESC
+LIMIT :N;
+
+N Most Borrowed Books in the Library
+
+SELECT d.DOCID, d.TITLE, COUNT(*) AS TimesBorrowed
+FROM DOCUMENT d
+JOIN BORROWS b ON d.DOCID = b.DOCID
+GROUP BY d.DOCID, d.TITLE
+ORDER BY TimesBorrowed DESC
+LIMIT :N;
+
+
+10 Most Popular Books of a Given Year
+
+SELECT d.DOCID, d.TITLE, COUNT(*) AS TimesBorrowed
+FROM DOCUMENT d
+JOIN BORROWS b ON d.DOCID = b.DOCID
+WHERE YEAR(b.BDTIME) = :year  -- enter year here
+GROUP BY d.DOCID, d.TITLE
+ORDER BY TimesBorrowed DESC
+LIMIT 10;
+
